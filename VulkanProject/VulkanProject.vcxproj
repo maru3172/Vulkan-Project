@@ -146,6 +146,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shader\shader.frag" />
