@@ -15,8 +15,10 @@
 #include <optional>
 #include <set>
 
-const uint32_t WIDTH = 1600;
-const uint32_t HEIGHT = 900;
+const uint32_t WIDTH = 800;
+const uint32_t HEIGHT = 600;
+
+const int MAX_FRAMES_IN_FLIGHT = 2;
 
 #ifdef NDEBUG
 const bool enableValidationLayers = false;

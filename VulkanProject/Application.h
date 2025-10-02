@@ -25,9 +25,14 @@ public:
 
 private:
     void initWindow();
+    static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
+
     void initVulkan();
     void mainLoop();
+
+    void cleanupSwapChain();
     void cleanup();
+    void recreateSwapChain();
 
     void createInstance();
     void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
@@ -38,7 +43,18 @@ private:
     void createLogicalDevice();
     void createSwapChain();
     void createImageViews();
+
+    void createRenderPass();
     void createGraphicsPipeline();
+    void createFramebuffers();
+
+    void createCommandPool();
+    void createCommandBuffers();
+    void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+
+    void createSyncObjects();
+    void drawFrame();
+
     VkShaderModule createShaderModule(const std::vector<char>& code);
 
     VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
@@ -73,5 +89,19 @@ private:
     VkFormat swapChainImageFormat;
     VkExtent2D swapChainExtent;
     std::vector<VkImageView> swapChainImageViews;
-};
+    std::vector<VkFramebuffer> swapChainFramebuffers;
 
+    VkRenderPass renderPass;
+    VkPipelineLayout pipelineLayout;
+    VkPipeline graphicsPipeline;
+
+    VkCommandPool commandPool;
+    std::vector<VkCommandBuffer> commandBuffers;
+
+    std::vector<VkSemaphore> imageAvailableSemaphores;
+    std::vector<VkSemaphore> renderFinishedSemaphores;
+    std::vector<VkFence> inFlightFences;
+    uint32_t currentFrame = 0;
+
+    bool framebufferResized = false;
+};
