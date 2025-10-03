@@ -149,6 +149,7 @@
     <ClInclude Include="vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\shader\shader.comput" />
     <None Include="..\shader\shader.frag" />
     <None Include="..\shader\shader.vert" />
   </ItemGroup>
