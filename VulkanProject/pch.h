@@ -24,6 +24,7 @@
 #include <array>
 #include <optional>
 #include <set>
+#include <random>
 
 
 const uint32_t WIDTH = 800;
@@ -33,6 +34,8 @@ const std::string MODEL_PATH = "../Resource/model/viking_room.obj";
 const std::string TEXTURE_PATH = "../Resource/texture/viking_room.png";
 
 const int MAX_FRAMES_IN_FLIGHT = 2;
+
+const uint32_t PARTICLE_COUNT = 8192;
 
 #ifdef NDEBUG
 const bool enableValidationLayers = false;

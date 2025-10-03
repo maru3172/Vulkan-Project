@@ -46,7 +46,13 @@
     <None Include="..\shader\shader.vert">
       <Filter>Shader</Filter>
     </None>
-    <None Include="..\shader\shader.comput">
+    <None Include="..\shader\shader.comp">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="..\shader\particle.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="..\shader\particle.vert">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

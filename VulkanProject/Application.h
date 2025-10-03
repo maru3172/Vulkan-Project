@@ -7,9 +7,9 @@ const std::vector<const char*> validationLayers = { "VK_LAYER_KHRONOS_validation
 const std::vector<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 
 struct QueueFamilyIndices {
-    bool isComplete() { return graphicsFamily.has_value() && presentFamily.has_value(); }
+    bool isComplete() { return graphicsAndComputeFamily.has_value() && presentFamily.has_value(); }
 
-    std::optional<uint32_t> graphicsFamily;
+    std::optional<uint32_t> graphicsAndComputeFamily;
     std::optional<uint32_t> presentFamily;
 };
 
@@ -47,10 +47,15 @@ private:
 
     void createRenderPass();
     void createDescriptorSetLayout();
+    void createComputeDescriptorSetLayout();
     void createGraphicsPipeline();
+    void createParticlePipeline();
+    void createComputePipeline();
     void createFramebuffers();
 
     void createCommandPool();
+
+    void createShaderStorageBuffers();
 
     void createColorResources();
     void createDepthResources();
@@ -72,7 +77,11 @@ private:
     void createVertexBuffer();
     void createIndexBuffer();
     void createUniformBuffers();
+    void createComputeUniformBuffers();
     void createDescriptorPool();
+
+    void createComputeDescriptorSets();
+
     void createDescriptorSets();
 
     void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
@@ -82,7 +91,9 @@ private:
 
     uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
     void createCommandBuffers();
+    void createComputeCommandBuffers();
     void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+    void recordComputeCommandBuffer(VkCommandBuffer commandBuffer);
 
     void createSyncObjects();
     void updateUniformBuffer(uint32_t currentImage);
@@ -116,6 +127,7 @@ private:
     VkDevice device;
 
     VkQueue graphicsQueue;
+    VkQueue computeQueue;
     VkQueue presentQueue;
 
     VkSwapchainKHR swapChain;
@@ -126,11 +138,19 @@ private:
     std::vector<VkFramebuffer> swapChainFramebuffers;
 
     VkRenderPass renderPass;
+    VkDescriptorSetLayout computeDescriptorSetLayout;
     VkDescriptorSetLayout descriptorSetLayout;
+    VkPipelineLayout computePipelineLayout;
+    VkPipelineLayout particlePipelineLayout;
     VkPipelineLayout pipelineLayout;
+    VkPipeline computePipeline;
     VkPipeline graphicsPipeline;
+    VkPipeline particlePipeline;
 
     VkCommandPool commandPool;
+
+    std::vector<VkBuffer> shaderStorageBuffers;
+    std::vector<VkDeviceMemory> shaderStorageBuffersMemory;
 
     VkImage colorImage;
     VkDeviceMemory colorImageMemory;
@@ -159,13 +179,21 @@ private:
 
     VkDescriptorPool descriptorPool;
     std::vector<VkDescriptorSet> descriptorSets;
+    std::vector<VkDescriptorSet> computeDescriptorSets;
 
     std::vector<VkCommandBuffer> commandBuffers;
+    std::vector<VkCommandBuffer> computeCommandBuffers;
 
     std::vector<VkSemaphore> imageAvailableSemaphores;
     std::vector<VkSemaphore> renderFinishedSemaphores;
+    std::vector<VkSemaphore> computeFinishedSemaphores;
     std::vector<VkFence> inFlightFences;
+    std::vector<VkFence> computeInFlightFences;
     uint32_t currentFrame = 0;
 
+    float lastFrameTime = 0.0f;
+
     bool framebufferResized = false;
+
+    double lastTime = 0.0f;
 };
